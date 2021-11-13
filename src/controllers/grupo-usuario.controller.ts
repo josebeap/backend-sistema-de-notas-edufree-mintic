@@ -1,4 +1,4 @@
-//Relacion estudiante por grupo
+//Relación estudiante por grupo
 import {
   Count,
   CountSchema,
@@ -6,7 +6,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-  import {
+import {
   del,
   get,
   getModelSchemaRef,
@@ -16,17 +16,13 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-Grupo,
-EstudianteGrupo,
-Usuario,
-} from '../models';
+import {Grupo, EstudianteGrupo, Usuario} from '../models';
 import {GrupoRepository} from '../repositories';
 
 export class GrupoUsuarioController {
   constructor(
     @repository(GrupoRepository) protected grupoRepository: GrupoRepository,
-  ) { }
+  ) {}
 
   @get('/grupos/{id}/usuarios', {
     responses: {
@@ -66,7 +62,8 @@ export class GrupoUsuarioController {
           }),
         },
       },
-    }) usuario: Omit<Usuario, 'id'>,
+    })
+    usuario: Omit<Usuario, 'id'>,
   ): Promise<Usuario> {
     return this.grupoRepository.usuarios(id).create(usuario);
   }
@@ -89,7 +86,8 @@ export class GrupoUsuarioController {
       },
     })
     usuario: Partial<Usuario>,
-    @param.query.object('where', getWhereSchemaFor(Usuario)) where?: Where<Usuario>,
+    @param.query.object('where', getWhereSchemaFor(Usuario))
+    where?: Where<Usuario>,
   ): Promise<Count> {
     return this.grupoRepository.usuarios(id).patch(usuario, where);
   }
@@ -104,7 +102,8 @@ export class GrupoUsuarioController {
   })
   async delete(
     @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(Usuario)) where?: Where<Usuario>,
+    @param.query.object('where', getWhereSchemaFor(Usuario))
+    where?: Where<Usuario>,
   ): Promise<Count> {
     return this.grupoRepository.usuarios(id).delete(where);
   }
